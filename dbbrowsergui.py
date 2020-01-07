@@ -29,7 +29,7 @@ class Browser():
     def close_db(self):
         if self.connection: self.connection.close()
         
-    def run_filters(self):        
+    def run_filters(self):     
         query = "SELECT * from books"
         for i, column in enumerate(self.data.description):
             if self.filter_text[i].get() == '': continue
@@ -59,8 +59,11 @@ class Browser():
             self.frame.pack(side=TOP)       
 
     def create_table(self):
-        table_name = Label(self.canvas, text='Books', pady=20)
-        table_name.pack()
+        table_names = self.connection.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        self.table_name = table_names.fetchone()[0]
+        #self.table_name.config(text=table_names[0])
+        self.table_name = Label(self.canvas, text=table_name, pady=20)
+        self.table_name.pack()
 
         self.data =  self.connection.execute("SELECT * from books")
         self.column_names = Frame(self.canvas)
