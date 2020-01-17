@@ -13,7 +13,7 @@ class Browser():
         self.master.resizable('True', 'True')
         self.canvas = Canvas(self.master, scrollregion=(0,0,500,500))
         self.canvas.pack()
-
+        
         self.open = Button(self.master, text='Open DB', command=self.open_db, padx=20)
         self.close = Button(self.master, text='Close DB', command=self.close_db, padx=20)
         self.open.pack()
@@ -62,7 +62,7 @@ class Browser():
         table_names = self.connection.execute("SELECT name FROM sqlite_master WHERE type='table';")
         self.table_name = table_names.fetchone()[0]
         #self.table_name.config(text=table_names[0])
-        self.table_name = Label(self.canvas, text=table_name, pady=20)
+        self.table_name = Label(self.canvas, text=self.table_name, pady=20)
         self.table_name.pack()
 
         self.data =  self.connection.execute("SELECT * from books")
